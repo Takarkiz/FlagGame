@@ -1,11 +1,10 @@
 package com.takhaki.flaggame
 
 import android.media.MediaPlayer
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                 whiteFlagUpImageView.visibility = View.VISIBLE
             }
 
-            when(randomNumber) {
+            when (randomNumber) {
                 0, 2 -> incorrect()
                 1 -> if (isWhiteFlagUp) incorrect() else correct()
                 3 -> if (isWhiteFlagUp) correct() else incorrect()
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 redFlagUpImageView.visibility = View.VISIBLE
             }
 
-            when(randomNumber) {
+            when (randomNumber) {
                 1, 3 -> incorrect()
                 0 -> if (isRedFlagUp) incorrect() else correct()
                 2 -> if (isRedFlagUp) correct() else incorrect()
