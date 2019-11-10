@@ -3,6 +3,7 @@ package com.takhaki.flaggame
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.random.Random
 
@@ -16,10 +17,21 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        whiteFlagUpImageView.visibility = View.INVISIBLE
+        redFlagUpImageView.visibility = View.INVISIBLE
 
         gameSet()
 
         whiteFragButton.setOnClickListener {
+
+            if (isWhiteFlagUp) {
+                whiteFlagUpImageView.visibility = View.INVISIBLE
+                whiteFlagDownImageView.visibility = View.VISIBLE
+            } else {
+                whiteFlagDownImageView.visibility = View.INVISIBLE
+                whiteFlagUpImageView.visibility = View.VISIBLE
+            }
+
             when(randomNumber) {
                 0, 2 -> incorrect()
                 1 -> if (isWhiteFlagUp) incorrect() else correct()
@@ -27,9 +39,19 @@ class MainActivity : AppCompatActivity() {
             }
 
             gameSet()
+            isWhiteFlagUp = !isWhiteFlagUp
         }
 
         redFragButton.setOnClickListener {
+
+            if (isRedFlagUp) {
+                redFlagUpImageView.visibility = View.INVISIBLE
+                redFlagDownImageView.visibility = View.VISIBLE
+            } else {
+                redFlagDownImageView.visibility = View.INVISIBLE
+                redFlagUpImageView.visibility = View.VISIBLE
+            }
+
             when(randomNumber) {
                 1, 3 -> incorrect()
                 0 -> if (isRedFlagUp) incorrect() else correct()
@@ -37,10 +59,17 @@ class MainActivity : AppCompatActivity() {
             }
 
             gameSet()
+            isRedFlagUp = !isRedFlagUp
         }
 
         nothingButton.setOnClickListener {
-
+            when (randomNumber) {
+                0 -> if (isRedFlagUp) correct() else incorrect()
+                1 -> if (isWhiteFlagUp) correct() else incorrect()
+                2 -> if (isRedFlagUp) incorrect() else correct()
+                3 -> if (isWhiteFlagUp) incorrect() else correct()
+            }
+            gameSet()
         }
     }
 

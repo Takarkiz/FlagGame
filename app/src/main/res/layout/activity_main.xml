@@ -40,14 +40,14 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/whiteFlagUpImageView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/flag_white" />
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/whiteFlagDownImageView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -72,14 +72,14 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/redFlagUpImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/flag_red" />
 
                 <ImageView
-                    android:id="@+id/imageView5"
+                    android:id="@+id/redFlagDownImageView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
