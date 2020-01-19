@@ -1,9 +1,12 @@
 package com.takhaki.flaggame
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -12,10 +15,12 @@ class MainActivity : AppCompatActivity() {
     var isRedFlagUp: Boolean = false
     var isWhiteFlagUp: Boolean = false
     var randomNumber = 0
+    var point = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         whiteFlagUpImageView.visibility = View.INVISIBLE
         redFlagUpImageView.visibility = View.INVISIBLE
 
@@ -73,17 +78,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun gameSet() {
+        scoreText.text = point.toString()
         randomNumber = (0..3).shuffled().first()
         flagOrderTextView.text = orderContents[randomNumber]
     }
 
     private fun correct() {
         val mediaPlayer = MediaPlayer.create(this, R.raw.correct2)
+        point++
         mediaPlayer.start()
     }
 
     private fun incorrect() {
+        val pref: SharedPreferences = getSharedPreferences("HighScore", Context.MODE_PRIVATE)
+        val defaultBestValue = pref.getInt("BestScore", 0)
+        if (point > defaultBestValue) {
+            pref.edit().apply {
+                putInt("BestScore", point)
+                apply()
+            }
+
+            showDialog("新記録達成！", "最高記録は今回の${point}です")
+        } else {
+            showDialog("失敗!", "今回の記録は${point}\n最高記録は${defaultBestValue}です")
+        }
+
+        point = 0
         val mediaPlayer = MediaPlayer.create(this, R.raw.incorrect1)
         mediaPlayer.start()
+    }
+
+    private fun showDialog(title: String, message: String) {
+        MaterialAlertDialogBuilder(this).setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("OK", null)
+            .show()
     }
 }
